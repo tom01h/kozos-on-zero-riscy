@@ -11,7 +11,7 @@
 
 ## 準備
 ### RISC-V ソフト開発環境のインストール
-[SiFive の開発ツールの HP](https://www.sifive.com/products/tools/) から ```Freedom Studio v20180122 (beta3) Windows``` をダウンロードして、適当なディレクトリに展開する。  
+[SiFive の開発ツールの HP](https://www.sifive.com/products/tools/) から ```SiFive GNU Embedded Toolchain v20171231 Windows``` をダウンロードして、適当なディレクトリに展開する。  
 このリポジトリは ```${HOME}\bin\riscv64-unknown-elf-gcc-20171231-x86_64-w64-mingw32``` を前提としている。
 
 ### make のインストール
