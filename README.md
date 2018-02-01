@@ -9,6 +9,7 @@
 - RISC-V ソフト開発環境
 - make
 
+このシステムは割り込み発生機能を持たないので、kozos 本の Step6 までを実装しています。
 ## 準備
 ### RISC-V ソフト開発環境のインストール
 [SiFive の開発ツールの HP](https://www.sifive.com/products/tools/) から ```SiFive GNU Embedded Toolchain v20171231 Windows``` をダウンロードして、適当なディレクトリに展開する。  
