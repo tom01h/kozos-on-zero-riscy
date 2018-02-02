@@ -32,9 +32,8 @@ LFLAGS = -static -n -T ld.scr -L.
 all :		$(TARGET)
 
 $(TARGET) :	$(OBJS)
-		$(CC) $(OBJS) -o $(TARGET) $(CFLAGS) $(LFLAGS)
-		copy $(TARGET) $(TARGET).elf
-		$(STRIP) $(TARGET)
+		$(CC) $(OBJS) -o $(TARGET).elf $(CFLAGS) $(LFLAGS)
+		$(STRIP) $(TARGET).elf -o $(TARGET)
 
 .c.o :		$<
 		$(CC) -c $(CFLAGS) $<

@@ -14,15 +14,15 @@ RANLIB  = $(BINDIR)/$(ADDNAME)ranlib.exe
 STRIP   = $(BINDIR)/$(ADDNAME)strip.exe
 
 OBJS  = startup.o main.o
-OBJS += lib.o serial.o xmodem.o elf.o
+OBJS += 
 
-TARGET = kzload
+TARGET = main
 
-CFLAGS = -Wall -nostdinc -nostdlib -fno-builtin -march=rv32im -mabi=ilp32
+CFLAGS = -nostdinc -nostdlib -fno-builtin -march=rv32im -mabi=ilp32
 CFLAGS += -I.
 #CFLAGS += -g
 CFLAGS += -O
-CFLAGS += -DKZLOAD
+CFLAGS += 
 
 LFLAGS = -static -n -Tld.scr -L.
 
@@ -34,7 +34,7 @@ all :		$(TARGET)
 $(TARGET) :	$(OBJS)
 		$(CC) $(OBJS) -o $(TARGET).elf $(CFLAGS) $(LFLAGS)
 		$(STRIP) $(TARGET).elf -o $(TARGET)
-		$(OBJCOPY) -O ihex $(TARGET) $(TARGET).ihex
+		$(OBJCOPY) -O ihex $(TARGET).elf $(TARGET).ihex
 
 .c.o :		$<
 		$(CC) -c $(CFLAGS) $<

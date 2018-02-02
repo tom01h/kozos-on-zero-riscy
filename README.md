@@ -9,7 +9,9 @@
 - RISC-V ソフト開発環境
 - make
 
-このシステムは割り込み発生機能を持たないので、kozos 本の Step6 までを実装しています。
+このシステムは割り込み発生機能を持たないので、kozos 本の Step6 までを実装しています。  
+また、とっつきの良さを最優先しています。kozos をさらに発展させたい方、zero-risy や RISC-V をより深く理解したい方はここにいつまでも留まらず、もっと良い教材を利用しましょう。
+
 ## 準備
 ### RISC-V ソフト開発環境のインストール
 [SiFive の開発ツールの HP](https://www.sifive.com/products/tools/) から ```SiFive GNU Embedded Toolchain v20171231 Windows``` をダウンロードして、適当なディレクトリに展開する。  
@@ -19,6 +21,17 @@
 自分の使い慣れた make を持っているならそれを使うと良いです。  
 ないなら、 [GnuWin の make の HP](http://gnuwin32.sourceforge.net/packages/make.htm) から ```Complete package, except sources``` をダウンロード。ちょっとバージョンが古いですが…  
 後は、ダウンロードしたインストーラを実行するだけ。
+
+## Hello World! を試す
+自分で準備した make を使うときは適宜読み替える。
+
+```
+cd ${kozos-on-zero-riscy}\src\main\Hello
+"c:\Program Files (x86)\GnuWin32\bin\make.exe"
+cd ${kozos-on-zero-riscy}
+copy src\main\Hello\main.ihex loadmem.ihex
+sim\Vzeroriscy_verilator_top
+```
 
 ## kozos のコンパイル
 自分で準備した make を使うときは適宜読み替える。
@@ -30,7 +43,7 @@ cd ${kozos-on-zero-riscy}\src\main\kozos\os
 "c:\Program Files (x86)\GnuWin32\bin\make.exe"
 ```
 
-## zero-riscy シミュレータの実行
+## kozos を zero-riscy シミュレータで実行
 
 ```
 cd ${kozos-on-zero-riscy}
