@@ -19,7 +19,9 @@
 
 ### make のインストール
 自分の使い慣れた make を持っているならそれを使うと良いです。  
-ないなら、 [GnuWin の make の HP](http://gnuwin32.sourceforge.net/packages/make.htm) から ```Complete package, except sources``` をダウンロード。ちょっとバージョンが古いですが…  
+vivado を使っているなら、```c:\Xilinx\Vivado\2017.4\msys32\mingw32\bin\make.exe``` を使うといいかも。
+↓のをインストールすると vivado が起動しなくなります。  
+どっちもないなら、 [GnuWin の make の HP](http://gnuwin32.sourceforge.net/packages/make.htm) から ```Complete package, except sources``` をダウンロード。ちょっとバージョンが古いですが…  
 後は、ダウンロードしたインストーラを実行するだけ。
 
 ## Hello World! を試す
