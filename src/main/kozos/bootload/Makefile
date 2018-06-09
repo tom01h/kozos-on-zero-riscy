@@ -14,11 +14,22 @@ RANLIB  = $(BINDIR)/$(ADDNAME)ranlib.exe
 STRIP   = $(BINDIR)/$(ADDNAME)strip.exe
 
 OBJS  = startup.o main.o
-OBJS += lib.o serial.o xmodem.o elf.o
+OBJS += lib.o
+ifeq ($(UART),ps7)
+OBJS += serial_ps7.o ff.o diskio.o
+else
+ifeq ($(UART),uartlite)
+OBJS += serial.o ff.o diskio.o
+else
+OBJS += serial.o ff_sim.o
+UART_FLAG = -DUARTSIM
+endif
+endif
+OBJS += xmodem.o elf.o
 
 TARGET = kzload
 
-CFLAGS = -Wall -nostdinc -nostdlib -fno-builtin -march=rv32im -mabi=ilp32
+CFLAGS = -nostdinc -nostdlib -fno-builtin -march=rv32im -mabi=ilp32
 CFLAGS += -I.
 #CFLAGS += -g
 CFLAGS += -O
@@ -37,7 +48,7 @@ $(TARGET) :	$(OBJS)
 		$(OBJCOPY) -O ihex $(TARGET) $(TARGET).ihex
 
 .c.o :		$<
-		$(CC) -c $(CFLAGS) $<
+		$(CC) -c $(CFLAGS) $(UART_FLAG) $<
 
 .s.o :		$<
 		$(CC) -c $(CFLAGS) $<

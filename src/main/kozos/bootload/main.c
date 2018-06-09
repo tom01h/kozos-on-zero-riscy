@@ -3,6 +3,7 @@
 #include "xmodem.h"
 #include "elf.h"
 #include "lib.h"
+#include "ff.h"
 
 static int init(void)
 {
@@ -67,6 +68,14 @@ int main(void)
   void (*f)(void);
   extern int buffer_start; /* リンカ・スクリプトで定義されているバッファ */
 
+  FIL fil;
+  FATFS fatfs;
+  FRESULT Res;
+  TCHAR *Path = "0:/";
+  unsigned char buff[512];
+  UINT NumBytesRead;
+  UINT FileSize = 512;
+
   init();
 
   puts("kzload (kozos boot loader) started.\n");
@@ -89,8 +98,27 @@ int main(void)
       putxval(size, 0);
       puts("\n");
       dump(loadbuf, size);
-    } else if (!strcmp(buf, "run")) { /* ELF形式ファイルの実行 */
-      entry_point = elf_load(loadbuf); /* メモリ上に展開(ロード) */
+    } else if (!strncmp(buf, "run", 3)) { /* ELF形式ファイルの実行 */
+      if(buf[3]){
+        Res = f_mount(&fatfs, Path, 0);
+        if(!Res){
+          Res = f_open(&fil, &buf[4], FA_READ);
+        }else{
+          puts("f_mount error ");putxval(Res, 2); puts("\n");
+        }
+        if(!Res){
+          Res = f_read(&fil, buff, FileSize, &NumBytesRead);
+        }else{
+          puts("f_open error ");putxval(Res, 2); puts("\n");
+        }
+        if(!Res){
+          entry_point = elf_load(buff, &fil); /* メモリ上に展開(ロード) */
+        }else{
+          puts("f_read error ");putxval(Res, 2); puts("\n");
+        }
+      }else{
+        entry_point = elf_load(loadbuf, 0); /* メモリ上に展開(ロード) */
+      }
       if (!entry_point) {
         puts("run error!\n");
       } else {

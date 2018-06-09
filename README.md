@@ -1,6 +1,6 @@
 # Windows コマンドプロンプトで kozos on zero-riscy を動かす
 ### このリポジトリに含まれるもの
-- kozos のソース
+- kozos ブートローダのソース
 - zero-riscy シミュレータの実行ファイル
 
 ### このリポジトリに含まれないもの
@@ -45,7 +45,7 @@ cd ${kozos-on-zero-riscy}\src\main\kozos\os
 "c:\Program Files (x86)\GnuWin32\bin\make.exe"
 ```
 
-## kozos を zero-riscy シミュレータで実行
+## kozos を zero-riscy シミュレータで実行 (XMODEM を使う)
 
 ```
 cd ${kozos-on-zero-riscy}
@@ -63,6 +63,32 @@ kzload (kozos boot loader) started.
 kzload> load <- type
 XMODEM receive succeeded.
 kzload> run <- type
+starting from entry point: 80080000
+Hello World!
+> echo aaa <- type
+ aaa
+> q
+```
+
+## kozos を zero-riscy シミュレータで実行 (SD カードを使う)
+SD カードはかなり抽象的な所までしかエミュレーションをしていません。  
+FasFs の関数レベルでエミュレーションしています。  
+その分すごく速いです。
+
+```
+cd ${kozos-on-zero-riscy}
+copy src\main\kozos\bootload\kzload.ihex loadmem.ihex
+copy src\main\kozos\os\kozos sdcard\
+sim\Vzeroriscy_verilator_top
+```
+
+実行結果  
+下の ```<- type``` のコマンドを入力
+
+```
+Running ...
+kzload (kozos boot loader) started.
+kzload> run kozos<- type
 starting from entry point: 80080000
 Hello World!
 > echo aaa <- type
@@ -101,6 +127,8 @@ ${TIME} の目安はシミュレーション実行ログの ```Cycles×100+1000`
 改変元のライセンス条件です。
 #### kozos
 kozos ディレクトリを参照ください。  
+#### FatFs
+kozos\bootload ディレクトリを参照ください。  
 #### zero-riscy
 以下と ```LICENSE.zero-riscy``` を参照ください。  
 
